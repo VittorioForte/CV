@@ -1,526 +1,612 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>CV - Vittorio Forte Logioco</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    :root {
-      --bg: #0f172a;
-      --bg-alt: #020617;
-      --card: #0b1220;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.15);
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --border: rgba(148, 163, 184, 0.35);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1d283a 0, #020617 50%, #000 100%);
-      color: var(--text);
-      line-height: 1.5;
-      padding: 2rem 1rem;
-      display: flex;
-      justify-content: center;
-    }
-
-    .cv-container {
-      width: 100%;
-      max-width: 960px;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.99));
-      border-radius: 1.5rem;
-      border: 1px solid var(--border);
-      box-shadow:
-        0 10px 40px rgba(15, 23, 42, 0.85),
-        0 0 0 1px rgba(15, 23, 42, 0.9);
-      padding: 2.5rem 2.25rem 2.75rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cv-container::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(56, 189, 248, 0.06), transparent 55%),
-        radial-gradient(circle at 90% 0%, rgba(59, 130, 246, 0.06), transparent 55%);
-      opacity: 0.9;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 1.5rem;
-      margin-bottom: 1.75rem;
-    }
-
-    .title-block h1 {
-      font-size: clamp(1.9rem, 2.4vw + 1rem, 2.4rem);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .title-block h1 span {
-      font-weight: 700;
-    }
-
-    .title-block .role {
-      margin-top: 0.35rem;
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .contact-block {
-      text-align: right;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      font-size: 0.75rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
-    }
-
-    .contact-block a {
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .contact-block a:hover {
-      color: var(--accent);
-    }
-
-    section {
-      margin-bottom: 1.8rem;
-      padding: 1.25rem 1.25rem 1.1rem;
-      border-radius: 1rem;
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.24), transparent 55%),
-                  radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.95), #020617);
-      backdrop-filter: blur(12px);
-    }
-
-    section h2 {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--muted);
-      margin-bottom: 0.65rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
-
-    section h2::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, rgba(148, 163, 184, 0.4), transparent);
-      opacity: 0.7;
-    }
-
-    .section-content {
-      font-size: 0.95rem;
-      color: var(--text);
-    }
-
-    .two-cols {
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 1.35rem;
-    }
-
-    .item {
-      margin-bottom: 0.75rem;
-    }
-
-    .item-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 0.1rem;
-    }
-
-    .item-title {
-      font-weight: 600;
-      color: #e5e7eb;
-    }
-
-    .item-subtitle {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    .item-meta {
-      font-size: 0.8rem;
-      color: var(--muted);
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    ul {
-      list-style: none;
-      margin-left: 0;
-      margin-top: 0.25rem;
-    }
-
-    ul li {
-      position: relative;
-      padding-left: 1.1rem;
-      margin-bottom: 0.2rem;
-    }
-
-    ul li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      top: 0.1rem;
-      color: var(--accent);
-      font-size: 0.85rem;
-    }
-
-    .tag-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
-    }
-
-    .tag {
-      font-size: 0.75rem;
-      border-radius: 999px;
-      padding: 0.2rem 0.6rem;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .highlight {
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    .interests-list span {
-      display: inline-block;
-      margin-right: 0.6rem;
-      margin-bottom: 0.25rem;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    @media (max-width: 768px) {
-      .cv-container {
-        padding: 1.7rem 1.2rem 2rem;
-        border-radius: 1.2rem;
-      }
-
-      header {
-        flex-direction: column;
-        text-align: left;
-      }
-
-      .contact-block {
-        text-align: left;
-      }
-
-      .two-cols {
-        grid-template-columns: 1fr;
-      }
-
-      .item-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .item-meta {
-        text-align: left;
-      }
-    }
-  </style>
+  <title>Vittorio Forte Logioco — Front-End Developer & Data Analyst</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <main class="cv-container">
-    <header>
-      <div class="title-block">
-        <h1><span>Vittorio</span> Forte Logioco</h1>
-        <p class="role">Junior Developer · Front End · Desarrollo Web</p>
-      </div>
-      <div class="contact-block">
-        <div class="badge">
-          <span class="badge-dot"></span>
-          Disponible para oportunidades junior
+
+  <!-- ─── NAVBAR ────────────────────────────────── -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="#" class="nav-logo" aria-label="Vittorio Forte — Home">VF</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#studies">Studies</a></li>
+      <li><a href="#data-analytics">Data</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation">
+    <a href="#about" class="drawer-link">About</a>
+    <a href="#experience" class="drawer-link">Experience</a>
+    <a href="#projects" class="drawer-link">Projects</a>
+    <a href="#studies" class="drawer-link">Studies</a>
+    <a href="#data-analytics" class="drawer-link">Data Analytics</a>
+    <a href="#contact" class="drawer-link">Contact</a>
+  </nav>
+
+  <!-- ─── HERO ───────────────────────────────────── -->
+  <header id="hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-greeting" aria-hidden="true">Hello, I'm</div>
+        <h1 class="hero-name">
+          <span class="gradient-text">Vittorio</span><br>
+          Forte Logioco
+        </h1>
+        <div class="hero-subtitle-wrap" aria-live="polite">
+          <span class="prefix">I'm a </span>
+          <span id="typewriter"></span><span class="cursor-blink" aria-hidden="true"></span>
         </div>
-        <div>Argentina</div>
-        <div>Email: <a href="mailto:sitelab.webdev@gmail.com">sitelab.webdev@gmail.com</a></div>
-        <div>Tel: +54 9 11 6682-3923</div>
-        <div>LinkedIn: <a href="https://www.linkedin.com/in/vittorio-forte-dev/" target="_blank">/vittorio-forte-logioco</a></div>
-        <div>GitHub: <a href="https://github.com/VittorioForte" target="_blank">VittorioForte</a></div>
+        <p class="hero-tagline">Building digital experiences.<br>Turning data into insight.</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-primary">View Projects</a>
+          <a href="#contact" class="btn-ghost">Contact Me</a>
+        </div>
+        <div class="hero-socials" aria-label="Social links">
+          <a href="https://github.com/VittorioForte" target="_blank" rel="noopener noreferrer" class="social-icon"
+            aria-label="GitHub">
+            <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" />
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/vittorio-forte-dev/" target="_blank" rel="noopener noreferrer"
+            class="social-icon" aria-label="LinkedIn">
+            <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+            </svg>
+          </a>
+          <a href="https://pixora.com.ar/" target="_blank" rel="noopener noreferrer" class="social-icon pixora"
+            aria-label="Pixora">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+        </div>
       </div>
-    </header>
 
-    <!-- PERFIL PROFESIONAL -->
-    <section id="perfil">
-      <h2>Perfil Profesional</h2>
-      <div class="section-content">
-        <p>
-          Desarrollador junior orientado a <span class="highlight">C++ y desarrollo web</span>, actualmente cursando la
-          Tecnicatura Universitaria en Programación y Sistemas (UTN FRGP) y la carrera de Full-Stack Web Developer (CoderHouse).
-        </p>
-        <p style="margin-top:0.4rem;">
-          Experiencia práctica en proyectos académicos y personales que integran:
-        </p>
-        <ul>
-          <li>Aplicaciones de escritorio en C++ con manejo de archivos binarios.</li>
-          <li>Sistemas de gestión (inventarios, ventas, carreras, biblioteca).</li>
-          <li>Desarrollo web con HTML, CSS y JavaScript.</li>
-          <li>Bases de datos relacionales en SQL Server con procedimientos almacenados y triggers.</li>
-          <li>Desarrollo de aplicaciones web con React</li>
-        </ul>
-        <p style="margin-top:0.4rem;">
-          Perfil orientado al aprendizaje continuo, la organización del código y el uso de buenas prácticas
-          (modularización, trabajo con Git/GitHub, etc.).
-        </p>
+      <div class="hero-photo-wrap" aria-label="Profile photo">
+        <div class="blob-glow" aria-hidden="true"></div>
+        <div class="hero-photo-mask">
+          <!-- PROFILE PHOTO: replace src with your image path in assets/img/ -->
+          <div class="hero-photo-placeholder" aria-label="Profile photo placeholder">
+            <svg fill="none" stroke="rgba(168,85,247,0.4)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <img src="assets/img/FtLinkedin-Png.png"
+              alt="Vittorio Forte Logioco — Front-End Developer & Data Analyst" />
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
+  </header>
 
-    <!-- FORMACION -->
-    <section id="formacion">
-      <h2>Formación Académica</h2>
-      <div class="section-content two-cols">
-        <div>
-          <div class="item">
-            <div class="item-header">
-              <div>
-                <div class="item-title">Tecnicatura Universitaria en Programación y Sistemas</div>
-                <div class="item-subtitle">UTN – Facultad Regional General Pacheco (FRGP)</div>
+  <!-- ─── ABOUT ─────────────────────────────────── -->
+  <div class="section-divider"></div>
+  <section id="about" aria-labelledby="about-heading">
+    <div class="section-wrap">
+      <div class="about-grid">
+        <div class="about-bio reveal">
+          <div class="section-label">About me</div>
+          <h2 id="about-heading">
+            Crafting interfaces.<br>
+            <span class="gradient-text">Decoding data.</span>
+          </h2>
+          <p>I'm Vittorio Forte Logioco — a Front-End Developer and Data Analytics enthusiast based in Argentina. I
+            blend clean, performant code with a deep curiosity about what data can reveal.</p>
+          <p>As co-founder of <a href="https://pixora.com.ar/" target="_blank" rel="noopener noreferrer"
+              style="color:var(--violet);text-decoration:none;font-weight:600;">Pixora</a>, a web development and
+            marketing agency, I help brands build meaningful digital presences.</p>
+          <p>Currently studying Systems &amp; Programming at UTN and expanding into Data Analytics — bridging design
+            thinking with data-driven decision-making.</p>
+        </div>
+
+        <div class="skills-section reveal" style="transition-delay:0.15s">
+          <div class="section-label">Skills</div>
+          <div class="skills-group">
+            <div class="skills-group-label">Front-End</div>
+            <div class="skills-pills">
+              <span class="pill">HTML5</span>
+              <span class="pill">CSS3</span>
+              <span class="pill">JavaScript</span>
+              <span class="pill">React.js</span>
+              <span class="pill">Flexbox</span>
+            </div>
+          </div>
+          <div class="skills-group">
+            <div class="skills-group-label">Data Analytics</div>
+            <div class="skills-pills">
+              <span class="pill blue">Python</span>
+              <span class="pill blue">R</span>
+              <span class="pill blue">SQL</span>
+              <span class="pill blue">Power BI</span>
+              <span class="pill blue">Tableau</span>
+            </div>
+          </div>
+          <div class="skills-group">
+            <div class="skills-group-label">Other</div>
+            <div class="skills-pills">
+              <span class="pill pink">C#</span>
+              <span class="pill pink">C++</span>
+              <span class="pill pink">Git</span>
+              <span class="pill pink">GitHub</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EXPERIENCE ─────────────────────────────── -->
+  <div class="section-divider"></div>
+  <section id="experience" aria-labelledby="exp-heading">
+    <div class="section-wrap">
+      <div class="exp-header reveal">
+        <div class="section-label" style="justify-content:center">Experience</div>
+        <h2 id="exp-heading" class="sec-h2">Where I've <span class="gradient-text">Built Things</span></h2>
+      </div>
+
+      <div class="timeline" role="list">
+        <article class="timeline-item reveal" role="listitem">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="exp-card">
+            <div class="exp-company gradient-text-2">Pixora</div>
+            <div class="exp-role">Co-Founder &amp; Developer</div>
+            <p class="exp-desc">Co-founded a web development and digital marketing agency delivering custom websites,
+              SEO strategies, and digital transformation for clients across industries.</p>
+            <a href="https://pixora.com.ar/" target="_blank" rel="noopener noreferrer" class="exp-link">
+              pixora.com.ar
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="timeline-item reveal" style="transition-delay:0.1s" role="listitem">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="exp-card">
+            <div class="exp-company gradient-text">CoderHouse</div>
+            <div class="exp-role">Front-End Developer (Student)</div>
+            <p class="exp-desc">Completed the full front-end track: Desarrollo Web, JavaScript Flex, and React.js.
+              Applied skills building real-world projects with modern tooling and best practices.</p>
+          </div>
+        </article>
+
+        <article class="timeline-item reveal" style="transition-delay:0.2s" role="listitem">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="exp-card">
+            <div class="exp-company"
+              style="background:var(--grad3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+              Freelance</div>
+            <div class="exp-role">Front-End Developer</div>
+            <p class="exp-desc">Delivered multiple client projects end-to-end — from design to deployment. Specializing
+              in performant, responsive, and visually distinctive websites.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PROJECTS ────────────────────────────────── -->
+  <div class="section-divider"></div>
+  <section id="projects" aria-labelledby="proj-heading">
+    <div class="section-wrap">
+      <div class="proj-header reveal">
+        <div class="section-label" style="justify-content:center">Portfolio</div>
+        <h2 id="proj-heading" class="sec-h2">Selected <span class="gradient-text">Projects</span></h2>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <article class="proj-card reveal">
+          <div class="proj-browser" aria-hidden="true">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url">vittorioforte.github.io/fabianforteforjaLP</div>
+          </div>
+          <div class="proj-iframe-wrap">
+            <div class="proj-iframe-overlay" aria-hidden="true"></div>
+            <iframe src="https://vittorioforte.github.io/fabianforteforjaLP/" loading="lazy"
+              sandbox="allow-scripts allow-same-origin" title="Fabian Forte — Knife Forger Website preview"></iframe>
+          </div>
+          <div class="proj-info">
+            <h3 class="proj-title">Fabian Forte — Knife Forger</h3>
+            <p class="proj-desc">Landing page for an artisan knife forger. Bold visual storytelling with custom
+              illustrations and product showcase.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">HTML</span>
+              <span class="proj-tag">CSS</span>
+              <span class="proj-tag">JS</span>
+            </div>
+            <a href="https://vittorioforte.github.io/fabianforteforjaLP/" target="_blank" rel="noopener noreferrer"
+              class="proj-link">
+              Live Site
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="proj-card reveal" style="transition-delay:0.1s">
+          <div class="proj-browser" aria-hidden="true">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url">vittorioforte.github.io/beltranbriones</div>
+          </div>
+          <div class="proj-iframe-wrap">
+            <div class="proj-iframe-overlay" aria-hidden="true"></div>
+            <iframe src="https://vittorioforte.github.io/beltranbriones/" loading="lazy"
+              sandbox="allow-scripts allow-same-origin" title="Beltrán Briones — Personal Website preview"></iframe>
+          </div>
+          <div class="proj-info">
+            <h3 class="proj-title">Beltrán Briones — Personal Site</h3>
+            <p class="proj-desc">Personal portfolio site with clean typography, smooth transitions, and a modern minimal
+              aesthetic.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">HTML</span>
+              <span class="proj-tag">CSS</span>
+              <span class="proj-tag">JS</span>
+            </div>
+            <a href="https://vittorioforte.github.io/beltranbriones/" target="_blank" rel="noopener noreferrer"
+              class="proj-link">
+              Live Site
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="proj-card reveal" style="transition-delay:0.2s">
+          <div class="proj-browser" aria-hidden="true">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url">pixora.com.ar</div>
+          </div>
+          <div class="proj-iframe-wrap">
+            <div class="proj-iframe-overlay" aria-hidden="true"></div>
+            <iframe src="https://pixora.com.ar/" loading="lazy" sandbox="allow-scripts allow-same-origin"
+              title="Pixora Agency Website preview"></iframe>
+          </div>
+          <div class="proj-info">
+            <h3 class="proj-title">Pixora — Agency Website</h3>
+            <p class="proj-desc">Full agency website for Pixora, showcasing services, case studies, and brand identity.
+              Built with React.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">HTML</span>
+              <span class="proj-tag">CSS</span>
+              <span class="proj-tag">JS</span>
+              <span class="proj-tag">React</span>
+            </div>
+            <a href="https://pixora.com.ar/" target="_blank" rel="noopener noreferrer" class="proj-link">
+              Live Site
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Project 4 — C++ No Live URL -->
+        <article class="proj-card reveal" style="transition-delay:0.3s">
+          <div class="proj-browser" aria-hidden="true">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url">university project — c++</div>
+          </div>
+          <div class="proj-cpp-display" aria-label="C++ Project — no live URL">
+            <div class="cpp-icon">C++</div>
+            <span class="cpp-badge">University Project</span>
+          </div>
+          <div class="proj-info">
+            <h3 class="proj-title">Kartodromo Management System</h3>
+            <p class="proj-desc">CLI-based system built in C++ for managing a go-kart track — booking time slots, client
+              management, and payment tracking.</p>
+            <div class="proj-tags">
+              <span class="proj-tag" style="border-color:rgba(6,182,212,0.3);color:var(--cyan)">C++</span>
+              <span class="proj-tag" style="border-color:rgba(6,182,212,0.3);color:var(--cyan)">OOP</span>
+              <span class="proj-tag" style="border-color:rgba(6,182,212,0.3);color:var(--cyan)">Data Structures</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STUDIES ──────────────────────────────────── -->
+  <div class="section-divider"></div>
+  <section id="studies" aria-labelledby="studies-heading">
+    <div class="section-wrap">
+      <div class="studies-header reveal">
+        <div class="section-label" style="justify-content:center">Education</div>
+        <h2 id="studies-heading" class="sec-h2">My <span class="gradient-text-2">Education</span></h2>
+      </div>
+
+      <div class="studies-scroll">
+
+        <article class="study-card reveal" data-diploma="assets/img/utn.png" tabindex="0" role="button"
+          aria-label="View UTN diploma">
+          <div class="study-icon" aria-hidden="true">🎓</div>
+          <div class="study-title">Técnico en Sistemas y Programación</div>
+          <div class="study-inst">UTN</div>
+          <div class="study-status">In progress — until 2027</div>
+          <div class="study-diploma-hint">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14,2 14,8 20,8" />
+            </svg>
+            Click for diploma
+          </div>
+          <!-- DIPLOMA IMAGE: replace with your diploma path in assets/img/diplomas/ -->
+          <img src="assets/img/utn.png" alt="UTN Diploma" style="display:none" />
+        </article>
+
+        <article class="study-card reveal" style="transition-delay:0.08s"
+          data-diploma="assets/img/dWeb.png" tabindex="0" role="button"
+          aria-label="View CoderHouse Web Development diploma">
+          <div class="study-icon" aria-hidden="true">💻</div>
+          <div class="study-title">Desarrollo Web</div>
+          <div class="study-inst">CoderHouse</div>
+          <div class="study-status">Completed</div>
+          <div class="study-diploma-hint">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14,2 14,8 20,8" />
+            </svg>
+            Click for diploma
+          </div>
+          <img src="assets/img/dWeb.png" alt="CoderHouse Web Development Diploma" style="display:none" />
+        </article>
+
+        <article class="study-card reveal" style="transition-delay:0.16s"
+          data-diploma="assets/img/dJavascript.jpg" tabindex="0" role="button"
+          aria-label="View JavaScript Flex diploma">
+          <div class="study-icon" aria-hidden="true">⚡</div>
+          <div class="study-title">JavaScript Flex</div>
+          <div class="study-inst">CoderHouse</div>
+          <div class="study-status">Completed</div>
+          <div class="study-diploma-hint">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14,2 14,8 20,8" />
+            </svg>
+            Click for diploma
+          </div>
+          <img src="assets/img/dJavascript.jpg" alt="CoderHouse JavaScript Flex Diploma" style="display:none" />
+        </article>
+
+        <article class="study-card reveal" style="transition-delay:0.24s"
+          data-diploma="assets/img/dReact.png" tabindex="0" role="button"
+          aria-label="View React.js diploma">
+          <div class="study-icon" aria-hidden="true">⚛️</div>
+          <div class="study-title">React.js</div>
+          <div class="study-inst">CoderHouse</div>
+          <div class="study-status">Completed</div>
+          <div class="study-diploma-hint">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14,2 14,8 20,8" />
+            </svg>
+            Click for diploma
+          </div>
+          <img src="assets/img/dReact.png" alt="CoderHouse React.js Diploma" style="display:none" />
+        </article>
+
+        <article class="study-card reveal" style="transition-delay:0.32s"
+          data-diploma="assets/img/dGoogle.jpg" tabindex="0" role="button"
+          aria-label="View Google Data Analytics certificate">
+          <div class="study-icon" aria-hidden="true">📊</div>
+          <div class="study-title">Data Analytics</div>
+          <div class="study-inst">Google / Coursera</div>
+          <div class="study-status">Completed</div>
+          <div class="study-diploma-hint">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14,2 14,8 20,8" />
+            </svg>
+            Click for certificate
+          </div>
+          <img src="assets/img/dGoogle.jpg" alt="Google Data Analytics Certificate" style="display:none" />
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── LIGHTBOX ─────────────────────────────────── -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Diploma viewer">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close diploma viewer">✕</button>
+    <img id="lightbox-img" src="" alt="Diploma" />
+  </div>
+
+  <!-- ─── DATA ANALYTICS ──────────────────────────── -->
+  <div class="section-divider"></div>
+  <section id="data-analytics" aria-labelledby="da-heading">
+    <div class="da-bg-grid" aria-hidden="true"></div>
+    <div class="section-wrap da-inner">
+      <div class="da-header reveal">
+        <div class="section-label">Specialization</div>
+        <h2 id="da-heading" class="sec-h2">Data <span class="gradient-text-2">Analytics</span></h2>
+        <p>Currently specializing in Data Analytics — transforming raw data into decisions that matter.</p>
+      </div>
+
+      <div class="da-content">
+        <div class="da-statement reveal">
+          <p>Data is the language of the modern world. I'm building the fluency to not just speak it, but to make others
+            understand what it's saying — turning numbers into narratives, and insights into action.</p>
+        </div>
+
+        <div class="da-tools reveal" style="transition-delay:0.1s">
+          <div class="da-tool">
+            <div class="da-tool-icon" aria-hidden="true">🐍</div>
+            <div class="da-tool-name">Python</div>
+            <span class="da-tool-badge">Intermediate</span>
+          </div>
+          <div class="da-tool">
+            <div class="da-tool-icon" aria-hidden="true">📈</div>
+            <div class="da-tool-name">R</div>
+            <span class="da-tool-badge learning">Learning</span>
+          </div>
+          <div class="da-tool">
+            <div class="da-tool-icon" aria-hidden="true">🗄️</div>
+            <div class="da-tool-name">SQL</div>
+            <span class="da-tool-badge">Intermediate</span>
+          </div>
+          <div class="da-tool">
+            <div class="da-tool-icon" aria-hidden="true">📊</div>
+            <div class="da-tool-name">Power BI</div>
+            <span class="da-tool-badge">Intermediate</span>
+          </div>
+          <div class="da-tool">
+            <div class="da-tool-icon" aria-hidden="true">📉</div>
+            <div class="da-tool-name">Tableau</div>
+            <span class="da-tool-badge learning">Learning</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ──────────────────────────────────── -->
+  <div class="section-divider"></div>
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="contact-blob" aria-hidden="true"></div>
+    <div class="section-wrap">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <div class="section-label">Get in touch</div>
+          <h2 id="contact-heading" class="sec-h2">Let's <span class="gradient-text">Connect</span></h2>
+          <p>Whether you have a project in mind, a question, or just want to say hi — I'm always open to a good
+            conversation.</p>
+          <div class="contact-links">
+            <a href="mailto:vittorioflogioco@gmail.com" class="contact-link">
+              <div class="contact-link-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
               </div>
-              <div class="item-meta">[2023] – Actual</div>
-            </div>
-            <ul>
-              <li>Programación I y II (C/C++), Bases de Datos, Probabilidad y Estadística.</li>
-              <li>Desarrollo de proyectos integradores en C++ y SQL Server.</li>
-            </ul>
-          </div>
-
-          <div class="item">
-            <div class="item-header">
-              <div>
-                <div class="item-title">Full-Stack Web Developer</div>
-                <div class="item-subtitle">CoderHouse – Modalidad Online</div>
+              <div class="contact-link-text">
+                <span class="contact-link-label">Email</span>
+                <span class="contact-link-value">vittorioflogioco@gmail.com</span>
               </div>
-              <div class="item-meta">[2024] – Actual</div>
-            </div>
-            <ul>
-              <li>Módulos: Desarrollo Web (HTML, CSS, maquetado), JavaScript, React/JS.</li>
-              <li>Top 9 del curso de Desarrollo Web.</li>
-              <li>Simulador de e-commerce en JavaScript como entrega destacada.</li>
-              <li>e-commerce con React.</li>
-            </ul>
+            </a>
+            <a href="https://github.com/VittorioForte" target="_blank" rel="noopener noreferrer" class="contact-link">
+              <div class="contact-link-icon" style="background:var(--grad3)">
+                <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" />
+                </svg>
+              </div>
+              <div class="contact-link-text">
+                <span class="contact-link-label">GitHub</span>
+                <span class="contact-link-value">github.com/VittorioForte</span>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/in/vittorio-forte-dev/" target="_blank" rel="noopener noreferrer"
+              class="contact-link">
+              <div class="contact-link-icon" style="background:linear-gradient(135deg,#0077b5,#00a0dc)">
+                <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+                </svg>
+              </div>
+              <div class="contact-link-text">
+                <span class="contact-link-label">LinkedIn</span>
+                <span class="contact-link-value">vittorio-forte-dev</span>
+              </div>
+            </a>
+            <a href="https://pixora.com.ar/" target="_blank" rel="noopener noreferrer" class="contact-link">
+              <div class="contact-link-icon" style="background:var(--grad)">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none" />
+                </svg>
+              </div>
+              <div class="contact-link-text">
+                <span class="contact-link-label">Agency</span>
+                <span class="contact-link-value">pixora.com.ar</span>
+              </div>
+            </a>
           </div>
         </div>
 
-        <div>
-          <div class="item">
-            <div class="item-title">Otros estudios</div>
-            <div class="item-subtitle">[Secundario y cursos complementarios]</div>
-            <ul>
-              <li>[Xul-Solar, Argentina].</li>
-              <li>Tecnico en sistemas y programacion nivel facultativo. [UTN]</li>
-              <li>Cursos online y autoformación en programación y desarrollo web. [Coder House]</li>
-            </ul>
+        <div class="contact-form reveal" style="transition-delay:0.15s" role="form" aria-label="Contact form">
+          <div class="section-label">Send a message</div>
+          <div class="form-group">
+            <label for="form-name">Name</label>
+            <input type="text" id="form-name" name="name" placeholder="Your name" autocomplete="name" />
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXPERIENCIA / PROYECTOS -->
-    <section id="experiencia">
-      <h2>Proyectos Relevantes</h2>
-      <div class="section-content">
-        <div class="item">
-          <div class="item-header">
-            <div>
-              <div class="item-title">Sistema de Gestión de Carreras de Karting (C++)</div>
-              <div class="item-subtitle">Proyecto académico · UTN FRGP – Programación II</div>
-            </div>
-            <div class="item-meta">[2024]</div>
+          <div class="form-group">
+            <label for="form-email">Email</label>
+            <input type="email" id="form-email" name="email" placeholder="your@email.com" autocomplete="email" />
           </div>
-          <ul>
-            <li>Aplicación de consola en C++ para gestionar carreras (kartódromo) con clientes, carreras, pagos y participantes.</li>
-            <li>
-              Persistencia de datos en archivos binarios <code>.dat</code> utilizando módulos como
-              <code>Carrera.h/.cpp</code>, <code>Clientes.h/.cpp</code>, <code>ArchivoCarreras.h/.cpp</code>,
-              <code>ArchivoPagos.h/.cpp</code>, entre otros.
-            </li>
-            <li>Altas, bajas lógicas, modificaciones y listados con informes como top 3 tiempos por categoría y recaudación total.</li>
-            <li>Uso de clases, encapsulamiento, constructores, getters/setters y métodos de negocio.</li>
-            <li>Versionado con Git y GitHub (repositorio <span class="highlight">TpiProgramacion2</span>).</li>
-          </ul>
-        </div>
-
-        <div class="item">
-          <div class="item-header">
-            <div>
-              <div class="item-title">Sistema de Biblioteca con SQL Server</div>
-              <div class="item-subtitle">Proyecto académico · UTN FRGP – Bases de Datos II</div>
-            </div>
-            <div class="item-meta">[Año]</div>
+          <div class="form-group">
+            <label for="form-message">Message</label>
+            <textarea id="form-message" name="message" placeholder="Tell me about your project..."></textarea>
           </div>
-          <ul>
-            <li>Diseño de base de datos con tablas como Usuarios, Libros, Prestamos, Sanciones, AuditoriaLibros.</li>
-            <li>Creación de procedimientos almacenados como <code>SP_RegistrarPrestamo</code> y <code>SP_RegistrarDevolucion</code>.</li>
-            <li>Triggers para actualizar stock, registrar sanciones por atraso y auditar cambios en Libros.</li>
-            <li>Uso de integridad referencial, restricciones <code>CHECK</code> y manejo de errores con <code>RAISERROR</code>.</li>
-          </ul>
-        </div>
-
-        <div class="item">
-          <div class="item-header">
-            <div>
-              <div class="item-title">Sistemas de Gestión en C++ (Proyectos personales)</div>
-              <div class="item-subtitle">Aplicaciones de consola · Archivos binarios</div>
-            </div>
-            <div class="item-meta">[Año]</div>
-          </div>
-          <ul>
-            <li>Sistemas de productos y ventas: inventario, facturación, clientes, detalle de facturas, vendedores.</li>
-            <li>Sistema de atención médica con archivo <code>clinica.dat</code> para registrar servicios, personal, pacientes y costos.</li>
-            <li>Listados e informes con filtros (por fecha, estado, etc.) y menús interactivos.</li>
-          </ul>
-        </div>
-
-        <div class="item">
-          <div class="item-header">
-            <div>
-              <div class="item-title">Desarrollo Web & Marca Personal</div>
-              <div class="item-subtitle">Proyectos personales · HTML, CSS, JavaScript</div>
-            </div>
-            <div class="item-meta">[Año]</div>
-          </div>
-          <ul>
-            <li>Prototipos web para marcas personales y emprendimientos como Forte Coaching, LabGainz y StyleSpot.</li>
-            <li>Maquetado con HTML y CSS, primeras animaciones y estructura responsive básica.</li>
-            <li>Diseño de identidad visual: paletas de colores, tipografías, banners para LinkedIn e Instagram.</li>
-          </ul>
+          <button type="button" class="form-submit" onclick="handleFormSubmit()">Send Message</button>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- HABILIDADES -->
-    <section id="habilidades">
-      <h2>Habilidades Técnicas</h2>
-      <div class="section-content two-cols">
-        <div>
-          <div class="item">
-            <div class="item-title">Lenguajes de programación</div>
-            <ul>
-              <li>C / C++ (POO, manejo de archivos, proyectos modulares en consola).</li>
-              <li>JavaScript (lógica, DOM básico, proyectos de curso).</li>
-            </ul>
-          </div>
+  <!-- ─── FOOTER ───────────────────────────────────── -->
+  <footer role="contentinfo">
+    <p class="footer-copy">© 2025 Vittorio Forte Logioco — Built with passion &amp; code.</p>
+    <div class="footer-socials" aria-label="Social links">
+      <a href="https://github.com/VittorioForte" target="_blank" rel="noopener noreferrer" class="social-icon"
+        aria-label="GitHub">
+        <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" />
+        </svg>
+      </a>
+      <a href="https://www.linkedin.com/in/vittorio-forte-dev/" target="_blank" rel="noopener noreferrer"
+        class="social-icon" aria-label="LinkedIn">
+        <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+        </svg>
+      </a>
+      <a href="https://pixora.com.ar/" target="_blank" rel="noopener noreferrer" class="social-icon pixora"
+        aria-label="Pixora">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none" />
+        </svg>
+      </a>
+    </div>
+  </footer>
 
-          <div class="item">
-            <div class="item-title">Desarrollo Web</div>
-            <ul>
-              <li>HTML5, CSS3 (maquetado, estructura semántica, layouts).</li>
-              <li>Conceptos iniciales de responsive design y flexbox.</li>
-            </ul>
-          </div>
-        </div>
+  <!-- Scroll to Top -->
+  <button id="scroll-top" aria-label="Scroll to top">
+    <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15" />
+    </svg>
+  </button>
 
-        <div>
-          <div class="item">
-            <div class="item-title">Bases de datos</div>
-            <ul>
-              <li>SQL Server: creación de tablas, relaciones, claves primarias y foráneas.</li>
-              <li>Consultas SQL (SELECT, JOIN, GROUP BY, etc.).</li>
-              <li>Procedimientos almacenados, triggers y restricciones.</li>
-            </ul>
-          </div>
-
-          <div class="item">
-            <div class="item-title">Herramientas</div>
-            <div class="tag-group">
-              <span class="tag">Git / GitHub</span>
-              <span class="tag">VS Code</span>
-              <span class="tag">Cursor</span>
-              <span class="tag">Code::Blocks</span>
-              <span class="tag">CLion</span>
-              <span class="tag">Docker (básico SQL Server)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- HABILIDADES BLANDAS -->
-    <section id="soft-skills">
-      <h2>Habilidades Blandas</h2>
-      <div class="section-content">
-        <ul>
-          <li>Capacidad de aprendizaje rápido y autoestudio.</li>
-          <li>Organización y documentación del código.</li>
-          <li>Trabajo en equipo en proyectos académicos.</li>
-          <li>Comunicación clara al explicar lógica y diseño de sistemas.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- IDIOMAS -->
-    <section id="idiomas">
-      <h2>Idiomas</h2>
-      <div class="section-content">
-        <ul>
-          <li><span class="highlight">Español:</span> Nativo.</li>
-          <li><span class="highlight">Inglés:</span> Nivel intermedio (lectura técnica y comunicación básica en entorno IT).</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- INTERESES -->
-    <section id="intereses">
-      <h2>Intereses</h2>
-      <div class="section-content interests-list">
-        <span>Desarrollo de software backend (C++ y bases de datos).</span>
-        <span>Desarrollo web full-stack.</span>
-        <span>Proyectos de automatización y sistemas de gestión.</span>
-        <span>Aprendizaje continuo en tecnologías de programación.</span>
-      </div>
-    </section>
-  </main>
+  <!-- ─── JAVASCRIPT ─────────────────────────────── -->
+  <script src="script.js"></script>
 </body>
+
 </html>
