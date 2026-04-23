@@ -1,101 +1,4 @@
-/* ── PARTICLE CANVAS ─────────────────────────────── */
-(function() {
-  const canvas = document.getElementById('hero-canvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, particles = [], mouse = { x: null, y: null };
-  const COUNT = 90;
-  const COLORS = ['rgba(124,58,237,', 'rgba(168,85,247,', 'rgba(236,72,153,', 'rgba(59,130,246,', 'rgba(6,182,212,'];
-
-  function resize() {
-    W = canvas.width = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-  }
-
-  class Particle {
-    constructor() { this.reset(true); }
-    reset(initial) {
-      this.x = Math.random() * W;
-      this.y = initial ? Math.random() * H : H + 10;
-      this.r = Math.random() * 2.5 + 0.5;
-      this.vx = (Math.random() - 0.5) * 0.4;
-      this.vy = -(Math.random() * 0.5 + 0.2);
-      this.alpha = Math.random() * 0.5 + 0.1;
-      this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-      this.life = Math.random() * 200 + 100;
-      this.age = initial ? Math.random() * this.life : 0;
-    }
-    update() {
-      this.age++;
-      if (this.age > this.life) { this.reset(false); return; }
-
-      if (mouse.x !== null) {
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 120) {
-          const force = (120 - dist) / 120 * 0.015;
-          this.vx -= (dx / dist) * force;
-          this.vy -= (dy / dist) * force;
-        }
-      }
-
-      this.vx *= 0.99;
-      this.vy *= 0.99;
-      this.x += this.vx;
-      this.y += this.vy;
-      const progress = this.age / this.life;
-      const fade = progress < 0.1 ? progress / 0.1 : progress > 0.8 ? 1 - (progress - 0.8) / 0.2 : 1;
-      this.currentAlpha = this.alpha * fade;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = this.color + this.currentAlpha + ')';
-      ctx.fill();
-    }
-  }
-
-  function init() {
-    particles = Array.from({ length: COUNT }, () => new Particle());
-  }
-
-  function loop() {
-    ctx.clearRect(0, 0, W, H);
-    particles.forEach(p => { p.update(); p.draw(); });
-    // Draw connections
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 100) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(124,58,237,${(1 - dist/100) * 0.1})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(loop);
-  }
-
-  window.addEventListener('resize', () => { resize(); });
-  document.getElementById('hero').addEventListener('mousemove', e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  });
-  document.getElementById('hero').addEventListener('mouseleave', () => {
-    mouse.x = null; mouse.y = null;
-  });
-
-  resize();
-  init();
-  loop();
-})();
-
-/* ── TYPEWRITER + GLITCH ─────────────────────────── */
+/* ── TYPEWRITER ───────────────────────────────────── */
 (function() {
   const el = document.getElementById('typewriter');
   const words = ['Front-End Developer', 'Data Analyst', 'Co-Founder @ Pixora'];
@@ -108,10 +11,7 @@
 
     if (!deleting) {
       if (ci < word.length) {
-        const span = document.createElement('span');
-        span.className = 'glitch-char';
-        span.textContent = word[ci];
-        el.appendChild(span);
+        el.textContent = word.substring(0, ci + 1);
         ci++;
         setTimeout(type, 55 + Math.random() * 40);
       } else {
@@ -120,13 +20,12 @@
         setTimeout(type, 60);
       }
     } else {
-      if (el.lastChild) {
-        el.removeChild(el.lastChild);
+      if (ci > 0) {
         ci--;
+        el.textContent = word.substring(0, ci);
         setTimeout(type, 28);
       } else {
         wi = (wi + 1) % words.length;
-        ci = 0;
         deleting = false;
         wait = 8;
         setTimeout(type, 60);
@@ -219,6 +118,248 @@
   lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') lb.classList.remove('open');
+  });
+})();
+
+/* ── CODE MODAL ─────────────────────────────────── */
+(function() {
+  const modal = document.getElementById('code-modal');
+  const modalTitle = document.getElementById('code-modal-title');
+  const iframe = document.getElementById('code-modal-iframe');
+  const closeBtn = document.getElementById('code-modal-close');
+  const extLink = document.getElementById('code-modal-external');
+  const tabPreview = document.getElementById('tab-preview');
+  const tabCode = document.getElementById('tab-code');
+  const codeViewer = document.getElementById('code-viewer');
+  const codeTree = document.getElementById('code-tree');
+  const codeContent = document.getElementById('code-content');
+  const codeFileHeader = document.getElementById('code-file-header');
+
+  let currentLive = '';
+  let currentRepo = '';
+  let currentOwner = '';
+  let currentRepoName = '';
+  const treeCache = {};
+  const fileCache = {};
+
+  function parseRepo(url) {
+    const match = url.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+    return match ? { owner: match[1], repo: match[2] } : null;
+  }
+
+  function getFileIcon(name) {
+    const ext = name.split('.').pop().toLowerCase();
+    const icons = {
+      html:'🌐', htm:'🌐', css:'🎨', scss:'🎨', sass:'🎨',
+      js:'⚡', jsx:'⚡', ts:'⚡', tsx:'⚡',
+      json:'📋', xml:'📋', py:'🐍', rb:'💎', php:'🐘',
+      cpp:'⚙️', c:'⚙️', h:'⚙️', hpp:'⚙️', cs:'⚙️',
+      java:'☕', md:'📝', txt:'📄',
+      png:'🖼️', jpg:'🖼️', jpeg:'🖼️', gif:'🖼️', svg:'🖼️', ico:'🖼️',
+      gitignore:'🚫', env:'🔒',
+      yml:'⚙️', yaml:'⚙️', sh:'💻', bat:'💻',
+      r:'📈', R:'📈', sql:'🗄️'
+    };
+    return icons[ext] || '📄';
+  }
+
+  function buildTree(files) {
+    const root = {};
+    files.forEach(function(file) {
+      if (file.type !== 'blob') return;
+      const parts = file.path.split('/');
+      let current = root;
+      for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        if (i === parts.length - 1) {
+          current[part] = { type: 'file', path: file.path, size: file.size };
+        } else {
+          if (!current[part]) current[part] = { type: 'folder', children: {} };
+          current = current[part].children;
+        }
+      }
+    });
+    return root;
+  }
+
+  function renderTree(tree, container, depth) {
+    const keys = Object.keys(tree).sort(function(a, b) {
+      const aF = tree[a].type === 'folder', bF = tree[b].type === 'folder';
+      if (aF && !bF) return -1;
+      if (!aF && bF) return 1;
+      return a.localeCompare(b);
+    });
+
+    keys.forEach(function(name) {
+      const item = tree[name];
+      if (item.type === 'folder') {
+        const folder = document.createElement('div');
+        folder.className = 'code-tree-folder';
+        folder.style.paddingLeft = (1 + depth * 0.9) + 'rem';
+        folder.innerHTML = '<span class="folder-arrow">▶</span><span class="folder-icon">📁</span>' + name;
+        folder.addEventListener('click', function() { folder.classList.toggle('open'); });
+        container.appendChild(folder);
+
+        const children = document.createElement('div');
+        children.className = 'code-tree-children';
+        container.appendChild(children);
+        renderTree(item.children, children, depth + 1);
+      } else {
+        const fileEl = document.createElement('div');
+        fileEl.className = 'code-tree-item';
+        fileEl.style.paddingLeft = (1 + depth * 0.9) + 'rem';
+        fileEl.innerHTML = '<span class="file-icon">' + getFileIcon(name) + '</span>' + name;
+        fileEl.addEventListener('click', function() {
+          loadFile(item.path);
+          codeTree.querySelectorAll('.code-tree-item.active').forEach(function(el) { el.classList.remove('active'); });
+          fileEl.classList.add('active');
+        });
+        container.appendChild(fileEl);
+      }
+    });
+  }
+
+  function loadTree() {
+    const cacheKey = currentOwner + '/' + currentRepoName;
+    if (treeCache[cacheKey]) {
+      codeTree.innerHTML = '';
+      renderTree(treeCache[cacheKey], codeTree, 0);
+      return;
+    }
+
+    codeTree.innerHTML = '<div class="code-tree-loading">Loading repository...</div>';
+
+    fetch('https://api.github.com/repos/' + currentOwner + '/' + currentRepoName + '/git/trees/main?recursive=1')
+      .then(function(res) {
+        if (!res.ok) return fetch('https://api.github.com/repos/' + currentOwner + '/' + currentRepoName + '/git/trees/master?recursive=1');
+        return res;
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('Repository not found');
+        return res.json();
+      })
+      .then(function(data) {
+        const tree = buildTree(data.tree);
+        treeCache[cacheKey] = tree;
+        codeTree.innerHTML = '';
+        renderTree(tree, codeTree, 0);
+      })
+      .catch(function(err) {
+        codeTree.innerHTML = '<div class="code-error">' +
+          '<div class="code-error-icon">⚠️</div>' +
+          '<div class="code-error-msg">Could not load repository.<br>' + err.message + '</div>' +
+          '<a href="' + currentRepo + '" target="_blank" rel="noopener noreferrer" class="code-error-link">Open on GitHub →</a></div>';
+      });
+  }
+
+  function loadFile(path) {
+    const cacheKey = currentOwner + '/' + currentRepoName + '/' + path;
+    codeFileHeader.querySelector('.code-file-path').textContent = path;
+
+    const ext = path.split('.').pop().toLowerCase();
+    const binaryExts = ['png','jpg','jpeg','gif','ico','woff','woff2','ttf','eot','mp4','mp3','pdf','zip'];
+    if (binaryExts.indexOf(ext) !== -1) {
+      codeContent.innerHTML = '<code class="code-placeholder">Binary file — cannot display preview.\nOpen on GitHub to view.</code>';
+      return;
+    }
+
+    if (fileCache[cacheKey]) { displayCode(fileCache[cacheKey]); return; }
+
+    codeContent.innerHTML = '<code class="code-placeholder">Loading...</code>';
+
+    fetch('https://raw.githubusercontent.com/' + currentOwner + '/' + currentRepoName + '/main/' + path)
+      .then(function(res) {
+        if (!res.ok) return fetch('https://raw.githubusercontent.com/' + currentOwner + '/' + currentRepoName + '/master/' + path);
+        return res;
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('File not found');
+        return res.text();
+      })
+      .then(function(text) {
+        fileCache[cacheKey] = text;
+        displayCode(text);
+      })
+      .catch(function() {
+        codeContent.innerHTML = '<code class="code-placeholder">Could not load file content.</code>';
+      });
+  }
+
+  function displayCode(text) {
+    const lines = text.split('\n');
+    let html = '';
+    for (let i = 0; i < lines.length; i++) {
+      const escaped = lines[i].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      html += '<div class="code-line"><span class="code-line-num">' + (i + 1) + '</span><span class="code-line-content">' + escaped + '</span></div>';
+    }
+    codeContent.innerHTML = html;
+  }
+
+  function openModal(card) {
+    const projTitle = card.querySelector('.proj-title').textContent;
+    currentLive = card.dataset.live || '';
+    currentRepo = card.dataset.repo || '';
+    const parsed = parseRepo(currentRepo);
+    if (parsed) { currentOwner = parsed.owner; currentRepoName = parsed.repo; }
+
+    modalTitle.textContent = projTitle;
+
+    if (!currentLive) {
+      tabPreview.style.display = 'none';
+      setTab('code');
+    } else {
+      tabPreview.style.display = '';
+      setTab('preview');
+    }
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    iframe.src = 'about:blank';
+    iframe.style.display = '';
+    codeViewer.classList.remove('active');
+    document.body.style.overflow = '';
+    codeContent.innerHTML = '<code class="code-placeholder">← Choose a file from the sidebar</code>';
+    codeFileHeader.querySelector('.code-file-path').textContent = 'Select a file to view';
+    codeTree.querySelectorAll('.code-tree-item.active').forEach(function(el) { el.classList.remove('active'); });
+  }
+
+  function setTab(tab) {
+    tabPreview.classList.toggle('active', tab === 'preview');
+    tabCode.classList.toggle('active', tab === 'code');
+
+    if (tab === 'preview') {
+      iframe.style.display = '';
+      codeViewer.classList.remove('active');
+      iframe.src = currentLive;
+      extLink.href = currentLive;
+    } else {
+      iframe.style.display = 'none';
+      codeViewer.classList.add('active');
+      extLink.href = currentRepo;
+      loadTree();
+    }
+  }
+
+  document.querySelectorAll('.proj-code-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const card = btn.closest('.proj-card');
+      openModal(card);
+      if (currentLive) setTab('code');
+    });
+  });
+
+  tabPreview.addEventListener('click', function() { setTab('preview'); });
+  tabCode.addEventListener('click', function() { setTab('code'); });
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 })();
 

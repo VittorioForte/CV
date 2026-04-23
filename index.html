@@ -38,7 +38,7 @@
 
   <!-- ─── HERO ───────────────────────────────────── -->
   <header id="hero">
-    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
 
     <div class="hero-content">
       <div class="hero-text">
@@ -82,17 +82,8 @@
       </div>
 
       <div class="hero-photo-wrap" aria-label="Profile photo">
-        <div class="blob-glow" aria-hidden="true"></div>
-        <div class="hero-photo-mask">
-          <!-- PROFILE PHOTO: replace src with your image path in assets/img/ -->
-          <div class="hero-photo-placeholder" aria-label="Profile photo placeholder">
-            <svg fill="none" stroke="rgba(168,85,247,0.4)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            <img src="assets/img/FtLinkedin-Png.png"
-              alt="Vittorio Forte Logioco — Front-End Developer & Data Analyst" />
-          </div>
+        <div class="hero-photo-frame">
+          <img src="assets/img/FtLinkedin-Png.png" alt="Vittorio Forte Logioco — Front-End Developer & Data Analyst" />
         </div>
       </div>
     </div>
@@ -183,10 +174,10 @@
         <article class="timeline-item reveal" style="transition-delay:0.1s" role="listitem">
           <div class="timeline-dot" aria-hidden="true"></div>
           <div class="exp-card">
-            <div class="exp-company gradient-text">CoderHouse</div>
-            <div class="exp-role">Front-End Developer (Student)</div>
-            <p class="exp-desc">Completed the full front-end track: Desarrollo Web, JavaScript Flex, and React.js.
-              Applied skills building real-world projects with modern tooling and best practices.</p>
+            <div class="exp-company gradient-text">Developer and Analyst at PIXORA</div>
+            <div class="exp-role">Front-End Developer/Marketing Analyst</div>
+            <p class="exp-desc">I work on the development of websites and digital marketing strategies for clients.
+              I also analyze data to provide insights and recommendations to improve their businesses.</p>
           </div>
         </article>
 
@@ -217,7 +208,8 @@
       <div class="projects-grid">
 
         <!-- Project 1 -->
-        <article class="proj-card reveal">
+        <article class="proj-card reveal" data-live="https://vittorioforte.github.io/fabianforteforjaLP/"
+          data-repo="https://github.com/VittorioForte/fabianforteforjaLP">
           <div class="proj-browser" aria-hidden="true">
             <div class="browser-dots"><span></span><span></span><span></span></div>
             <div class="browser-url">vittorioforte.github.io/fabianforteforjaLP</div>
@@ -236,48 +228,69 @@
               <span class="proj-tag">CSS</span>
               <span class="proj-tag">JS</span>
             </div>
-            <a href="https://vittorioforte.github.io/fabianforteforjaLP/" target="_blank" rel="noopener noreferrer"
-              class="proj-link">
-              Live Site
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
-              </svg>
-            </a>
+            <div class="proj-actions">
+              <a href="https://vittorioforte.github.io/fabianforteforjaLP/" target="_blank" rel="noopener noreferrer"
+                class="proj-link">
+                Live Site
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+                </svg>
+              </a>
+              <button class="proj-link proj-code-btn" aria-label="View source code">
+                View Code
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              </button>
+            </div>
           </div>
         </article>
 
         <!-- Project 2 -->
-        <article class="proj-card reveal" style="transition-delay:0.1s">
+        <article class="proj-card reveal" style="transition-delay:0.1s"
+          data-live="https://vittorioforte.github.io/socatattoo/"
+          data-repo="https://github.com/VittorioForte/socatattoo">
           <div class="proj-browser" aria-hidden="true">
             <div class="browser-dots"><span></span><span></span><span></span></div>
-            <div class="browser-url">vittorioforte.github.io/beltranbriones</div>
+            <div class="browser-url">vittorioforte.github.io/socatattoo/</div>
           </div>
           <div class="proj-iframe-wrap">
             <div class="proj-iframe-overlay" aria-hidden="true"></div>
-            <iframe src="https://vittorioforte.github.io/beltranbriones/" loading="lazy"
-              sandbox="allow-scripts allow-same-origin" title="Beltrán Briones — Personal Website preview"></iframe>
+            <iframe src="https://vittorioforte.github.io/socatattoo/" loading="lazy"
+              sandbox="allow-scripts allow-same-origin" title="Soca Tattoo — Tattoo Shop preview"></iframe>
           </div>
           <div class="proj-info">
-            <h3 class="proj-title">Beltrán Briones — Personal Site</h3>
-            <p class="proj-desc">Personal portfolio site with clean typography, smooth transitions, and a modern minimal
-              aesthetic.</p>
+            <h3 class="proj-title">Soca Tattoo — Tattoo Shop</h3>
+            <p class="proj-desc">Website for a tattoo shop with clean typography, smooth transitions, and a modern
+              minimal aesthetic.</p>
             <div class="proj-tags">
               <span class="proj-tag">HTML</span>
               <span class="proj-tag">CSS</span>
               <span class="proj-tag">JS</span>
             </div>
-            <a href="https://vittorioforte.github.io/beltranbriones/" target="_blank" rel="noopener noreferrer"
-              class="proj-link">
-              Live Site
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
-              </svg>
-            </a>
+            <div class="proj-actions">
+              <a href="https://github.com/VittorioForte/socatattoo" target="_blank" rel="noopener noreferrer"
+                class="proj-link">
+                Live Site
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+                </svg>
+              </a>
+              <button class="proj-link proj-code-btn" aria-label="View source code">
+                View Code
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              </button>
+            </div>
           </div>
         </article>
 
         <!-- Project 3 -->
-        <article class="proj-card reveal" style="transition-delay:0.2s">
+        <article class="proj-card reveal" style="transition-delay:0.2s" data-live="https://pixora.com.ar/"
+          data-repo="https://github.com/VittorioForte/pixora">
           <div class="proj-browser" aria-hidden="true">
             <div class="browser-dots"><span></span><span></span><span></span></div>
             <div class="browser-url">pixora.com.ar</div>
@@ -297,17 +310,27 @@
               <span class="proj-tag">JS</span>
               <span class="proj-tag">React</span>
             </div>
-            <a href="https://pixora.com.ar/" target="_blank" rel="noopener noreferrer" class="proj-link">
-              Live Site
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
-              </svg>
-            </a>
+            <div class="proj-actions">
+              <a href="https://pixora.com.ar/" target="_blank" rel="noopener noreferrer" class="proj-link">
+                Live Site
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+                </svg>
+              </a>
+              <button class="proj-link proj-code-btn" aria-label="View source code">
+                View Code
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              </button>
+            </div>
           </div>
         </article>
 
-        <!-- Project 4 — C++ No Live URL -->
-        <article class="proj-card reveal" style="transition-delay:0.3s">
+        <!-- Project 4 — C++ -->
+        <article class="proj-card reveal" style="transition-delay:0.3s"
+          data-repo="https://github.com/VittorioForte/TpiProgramacion2">
           <div class="proj-browser" aria-hidden="true">
             <div class="browser-dots"><span></span><span></span><span></span></div>
             <div class="browser-url">university project — c++</div>
@@ -324,6 +347,15 @@
               <span class="proj-tag" style="border-color:rgba(6,182,212,0.3);color:var(--cyan)">C++</span>
               <span class="proj-tag" style="border-color:rgba(6,182,212,0.3);color:var(--cyan)">OOP</span>
               <span class="proj-tag" style="border-color:rgba(6,182,212,0.3);color:var(--cyan)">Data Structures</span>
+            </div>
+            <div class="proj-actions">
+              <button class="proj-link proj-code-btn" aria-label="View source code">
+                View Code
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              </button>
             </div>
           </div>
         </article>
@@ -356,7 +388,6 @@
             </svg>
             Click for diploma
           </div>
-          <!-- DIPLOMA IMAGE: replace with your diploma path in assets/img/diplomas/ -->
           <img src="assets/img/utn.png" alt="UTN Diploma" style="display:none" />
         </article>
 
@@ -600,6 +631,64 @@
       <polyline points="18 15 12 9 6 15" />
     </svg>
   </button>
+
+  <!-- ─── CODE MODAL ──────────────────────────────── -->
+  <div id="code-modal" class="code-modal" role="dialog" aria-modal="true" aria-label="Project explorer">
+    <div class="code-modal-inner">
+      <div class="code-modal-header">
+        <h3 id="code-modal-title" class="code-modal-title"></h3>
+        <div class="code-modal-tabs">
+          <button class="code-tab active" data-tab="preview" id="tab-preview">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            Preview
+          </button>
+          <button class="code-tab" data-tab="code" id="tab-code">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg>
+            Source Code
+          </button>
+        </div>
+        <a id="code-modal-external" class="code-modal-ext" href="#" target="_blank" rel="noopener noreferrer"
+          aria-label="Open in new tab">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+          </svg>
+        </a>
+        <button class="code-modal-close" id="code-modal-close" aria-label="Close modal">✕</button>
+      </div>
+      <div class="code-modal-body">
+        <iframe id="code-modal-iframe" src="about:blank" title="Project preview"></iframe>
+        <div id="code-viewer" class="code-viewer">
+          <div class="code-sidebar">
+            <div class="code-sidebar-header">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+              </svg>
+              Files
+            </div>
+            <div class="code-tree" id="code-tree">
+              <div class="code-tree-loading">Loading repository...</div>
+            </div>
+          </div>
+          <div class="code-display">
+            <div class="code-file-header" id="code-file-header">
+              <span class="code-file-path">Select a file to view</span>
+            </div>
+            <div class="code-content-wrap">
+              <pre class="code-content"
+                id="code-content"><code class="code-placeholder">← Choose a file from the sidebar</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ─── JAVASCRIPT ─────────────────────────────── -->
   <script src="script.js"></script>
